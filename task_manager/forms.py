@@ -14,7 +14,8 @@ class TaskForm(forms.ModelForm):
         )
     )
     deadline = forms.DateTimeField(
-        widget=forms.SelectDateWidget
+        widget=forms.SelectDateWidget,
+        required=False
     )
     tags = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(),

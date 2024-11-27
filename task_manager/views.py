@@ -1,5 +1,6 @@
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 
 from task_manager.forms import TaskForm
@@ -8,8 +9,7 @@ from task_manager.models import Task, Tag
 
 class TaskListView(generic.ListView):
     model = Task
-    template_name = "task_manager/task_list.html"
-    queryset = Task.objects.prefetch_related("tags")
+    queryset = Task.objects.prefetch_related("tags").order_by("-created")
 
 
 class TaskCreateView(generic.CreateView):
@@ -23,6 +23,7 @@ class TaskUpdateView(generic.UpdateView):
     form_class = TaskForm
     success_url = reverse_lazy("task_manager:task-list")
 
+
 class TaskDeleteView(generic.DeleteView):
     model = Task
     success_url = reverse_lazy("task_manager:task-list")
@@ -34,14 +35,22 @@ class TagListView(generic.ListView):
 
 class TagCreateView(generic.CreateView):
     model = Tag
-    fields = "__all__"
+    fields = ["name"]
+    success_url = reverse_lazy("task_manager:tag-list")
 
 
 class TagUpdateView(generic.UpdateView):
     model = Tag
-    fields = "__all__"
+    fields = ["name"]
 
 
 class TagDeleteView(generic.DeleteView):
     model = Tag
     success_url = reverse_lazy("task_manager:tag-list")
+
+
+def change_task_status(request: HttpRequest, pk: int) -> HttpResponse:
+    task = get_object_or_404(Task, pk=pk)
+    task.status = not task.status
+    task.save()
+    return redirect(reverse("task_manager:task-list"))
