@@ -20,12 +20,13 @@
           {{ tag.name }}
         </td>
         <td>
-          <a href="{% url "task_manager:tag-update" pk=tag.id %}">
+          <a class="btn btn-secondary"
+              href="{% url "task_manager:tag-update" pk=tag.id %}">
             Update
           </a>
         </td>
         <td>
-          <a
+          <a class="btn btn-secondary"
               href="{% url "task_manager:tag-delete" pk=tag.id %}">
             Delete
           </a>
