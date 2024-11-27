@@ -27,3 +27,7 @@ class TagCreateView(generic.CreateView):
 class TagUpdateView(generic.UpdateView):
     model = Tag
     fields = "__all__"
+
+class TagDeleteView(generic.DeleteView):
+    model = Tag
+    success_url = reverse_lazy("task_manager:tag-list")
