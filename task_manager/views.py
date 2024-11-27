@@ -9,7 +9,7 @@ from task_manager.models import Task, Tag
 
 class TaskListView(generic.ListView):
     model = Task
-    queryset = Task.objects.prefetch_related("tags").order_by("-created")
+    queryset = Task.objects.prefetch_related("tags").order_by("status","-created")
 
 
 class TaskCreateView(generic.CreateView):
