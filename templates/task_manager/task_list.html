@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>TODO list</h1>
+  {% if task_list %}
+    <ul>
+      {% for task in task_list %}
+        <li>
+          {{ task.content }}
+          {{ task.created }}
+          {{ task.deadline }}
+          {{ task.status }}
+          {% for tag in task.tags.all %}
+            {{ tag.name }}
+          {% endfor %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No task</p>
+  {% endif %}
+{% endblock %}
