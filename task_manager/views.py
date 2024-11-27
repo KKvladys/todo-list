@@ -17,21 +17,30 @@ class TaskCreateView(generic.CreateView):
     form_class = TaskForm
     success_url = reverse_lazy("task_manager:task-list")
 
+
 class TaskUpdateView(generic.UpdateView):
     model = Task
     form_class = TaskForm
     success_url = reverse_lazy("task_manager:task-list")
 
+class TaskDeleteView(generic.DeleteView):
+    model = Task
+    success_url = reverse_lazy("task_manager:task-list")
+
+
 class TagListView(generic.ListView):
     model = Tag
+
 
 class TagCreateView(generic.CreateView):
     model = Tag
     fields = "__all__"
 
+
 class TagUpdateView(generic.UpdateView):
     model = Tag
     fields = "__all__"
+
 
 class TagDeleteView(generic.DeleteView):
     model = Tag
