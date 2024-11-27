@@ -3,41 +3,48 @@
 {% block content %}
   <h1>
     TODO list
-  <a class="btn btn-primary btn-right-side " href="{% url "task_manager:task-create" %}">
-    Add task
-  </a>
+    <a class="btn btn-primary btn-right-side " href="{% url "task_manager:task-create" %}">
+      Add task
+    </a>
   </h1>
-  
   {% if task_list %}
-      {% for task in task_list %}
-        <table class="table">
-          <tr>
-            <th>
-              <p>
-                {{ task.content }}
-                {% if task.status is False %}
-                  <span style="color: red">Not Done</span>
-                  {% else %}
-                  <span style="color: green">Done</span>
+    {% for task in task_list %}
+      <table class="table">
+        <tr>
+          <th>
+            <p>
+              {{ task.content }}
+              {% if task.status is False %}
+                <span class="not-done-task">Not Done</span>
+
+              {% else %}
+                <span class="done-task">Done</span>
+              {% endif %}
+              <a class="btn-right-side" href="{% url "task_manager:task-change-status" pk=task.id %}">
+                {% if not task.status %}
+                  <span class="btn btn-success">Complete</span>
+                {% else %}
+                  <span class="btn btn-secondary">Undo</span>
                 {% endif %}
-              </p>
-              <p>
-                Creates: {{ task.created }} 
-                 {% if task.deadline %}
-                   <span style="color: brown">Deadline: {{ task.deadline }}</span>
-                {% endif %}
-              </p>
-              <p>Tags: 
-                {% for tag in task.tags.all %}
-                  {{ tag.name }}
-                {% endfor %}
-              <a href="{% url "task_manager:task-update" pk=task.id %}">Update</a> 
+              </a>
+            </p>
+            <p>
+              Creates: {{ task.created }}
+              {% if task.deadline %}
+                <span class="deadline-text">Deadline: {{ task.deadline }}</span>
+              {% endif %}
+            </p>
+            <p>Tags:
+              {% for tag in task.tags.all %}
+                {{ tag.name }}
+              {% endfor %}
+              <a href="{% url "task_manager:task-update" pk=task.id %}">Update</a>
               <a href="{% url "task_manager:task-delete" pk=task.id %}">Delete</a>
-              </p>
-            </th>
-          </tr>
-        </table>
-      {% endfor %}
+            </p>
+          </th>
+        </tr>
+      </table>
+    {% endfor %}
   {% else %}
     <p>No task</p>
   {% endif %}
