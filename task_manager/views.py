@@ -20,3 +20,10 @@ class TaskCreateView(generic.CreateView):
 class TagListView(generic.ListView):
     model = Tag
 
+class TagCreateView(generic.CreateView):
+    model = Tag
+    fields = "__all__"
+
+class TagUpdateView(generic.UpdateView):
+    model = Tag
+    fields = "__all__"
