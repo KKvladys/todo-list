@@ -3,7 +3,7 @@
 {% block content %}
   <h1>
     TODO list
-    <a class="btn btn-primary btn-right-side " href="{% url "task_manager:task-create" %}">
+    <a class="btn btn-primary btn-right-side " href="{% url 'task_manager:task-create' %}">
       Add task
     </a>
   </h1>
@@ -20,7 +20,7 @@
               {% else %}
                 <span class="done-task">Done</span>
               {% endif %}
-              <a class="btn-right-side" href="{% url "task_manager:task-change-status" pk=task.id %}">
+              <a class="btn-right-side" href="{% url 'task_manager:task-change-status' pk=task.id %}">
                 {% if not task.status %}
                   <span class="btn btn-success">Complete</span>
                 {% else %}
@@ -38,8 +38,8 @@
               {% for tag in task.tags.all %}
                 {{ tag.name }}
               {% endfor %}
-              <a href="{% url "task_manager:task-update" pk=task.id %}">Update</a>
-              <a href="{% url "task_manager:task-delete" pk=task.id %}">Delete</a>
+              <a href="{% url 'task_manager:task-update' pk=task.id %}">Update</a>
+              <a href="{% url 'task_manager:task-delete' pk=task.id %}">Delete</a>
             </p>
           </th>
         </tr>
